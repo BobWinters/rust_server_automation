@@ -1,0 +1,33 @@
+name: rust-updater
+
+services:
+  rust-updater:
+    build:
+      context: .
+    image: "rust-server-automation:local"
+    container_name: "rust-updater"
+    restart: unless-stopped
+    env_file:
+      - ${LIVE_RUST_COMPOSE_DIR:-../rust_server_live}/.env
+    environment:
+      RUST_SERVICE_NAME: "rust-server"
+      RUST_CONTAINER_NAME: "rust-server"
+      RUST_IMAGE: "bobwinters/rust-game-server:latest-oxide"
+      COMPOSE_PROJECT_DIR: "/compose"
+      COMPOSE_FILE: "/compose/compose.yaml"
+      CHECK_INTERVAL_SECONDS: "900"
+      UPDATE_COUNTDOWN_SECONDS: "900"
+      RCON_HOST: "rust-server"
+      FORCE_UPDATE_WITHOUT_RCON: "false"
+      PRUNE_OLD_IMAGES: "true"
+      DRY_RUN: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${LIVE_RUST_COMPOSE_DIR:-../rust_server_live}:/compose:ro
+    networks:
+      - rust_default
+
+networks:
+  rust_default:
+    external: true
+    name: rust_default
