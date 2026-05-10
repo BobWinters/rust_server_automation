@@ -35,21 +35,23 @@ You can override that path without editing this repo:
 LIVE_RUST_COMPOSE_DIR=/path/to/private/rust_server_live docker compose -f compose.updater.yaml up -d --build rust-updater
 ```
 
-Start in dry-run mode:
+Start or recreate the updater:
 
 ```bash
 docker compose -f compose.updater.yaml up -d --build rust-updater
 docker logs -f rust-updater
 ```
 
-The separate compose file defaults to:
+The separate compose file currently uses:
 
 ```yaml
       COMPOSE_FILE: "/compose/compose.yaml"
-      DRY_RUN: "true"
+      DRY_RUN: "false"
 ```
 
-After one clean dry-run check, change `DRY_RUN` to `"false"` in `compose.updater.yaml` and recreate the updater:
+Set `DRY_RUN` to `"true"` before starting the updater if you want to verify detection without sending countdown RCON messages, saving, restarting, or pruning.
+
+After changing `DRY_RUN`, recreate the updater:
 
 ```bash
 docker compose -f compose.updater.yaml up -d --build rust-updater

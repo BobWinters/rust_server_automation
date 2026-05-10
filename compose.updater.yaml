@@ -20,7 +20,7 @@ services:
       RCON_HOST: "rust-server"
       FORCE_UPDATE_WITHOUT_RCON: "false"
       PRUNE_OLD_IMAGES: "true"
-      DRY_RUN: "true"
+      DRY_RUN: "false"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${LIVE_RUST_COMPOSE_DIR:-../rust_server_live}:/compose:ro
