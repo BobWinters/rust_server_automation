@@ -24,7 +24,7 @@ docker build -t bobwinters/rust-server-automation:latest .
 
 ### Separate Updater Compose File
 
-This repository includes `compose.updater.yaml`, which runs the updater without editing the live Rust server Compose file. It builds the updater locally as `rust-server-automation:local`, joins the existing `rust_default` Docker network, and mounts the private live Rust Compose directory at `/compose`.
+This repository includes `compose.updater.yaml`, which runs the updater without editing the live Rust server Compose file. It pulls `bobwinters/rust-server-automation:latest` from Docker Hub, joins the existing `rust_default` Docker network, and mounts the private live Rust Compose directory at `/compose`.
 
 By default, the separate updater compose file expects the private live server config to be in a sibling directory:
 
@@ -36,13 +36,14 @@ By default, the separate updater compose file expects the private live server co
 You can override that path without editing this repo:
 
 ```bash
-LIVE_RUST_COMPOSE_DIR=/path/to/private/rust_server_live docker compose -f compose.updater.yaml up -d --build rust-updater
+LIVE_RUST_COMPOSE_DIR=/path/to/private/rust_server_live docker compose -f compose.updater.yaml up -d rust-updater
 ```
 
 Start or recreate the updater:
 
 ```bash
-docker compose -f compose.updater.yaml up -d --build rust-updater
+docker compose -f compose.updater.yaml pull rust-updater
+docker compose -f compose.updater.yaml up -d rust-updater
 docker logs -f rust-updater
 ```
 
@@ -58,7 +59,7 @@ Set `DRY_RUN` to `"true"` before starting the updater if you want to verify dete
 After changing `DRY_RUN`, recreate the updater:
 
 ```bash
-docker compose -f compose.updater.yaml up -d --build rust-updater
+docker compose -f compose.updater.yaml up -d rust-updater
 ```
 
 ### Live Rust Compose Block

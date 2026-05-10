@@ -2,9 +2,7 @@ name: rust-updater
 
 services:
   rust-updater:
-    build:
-      context: .
-    image: "rust-server-automation:local"
+    image: "bobwinters/rust-server-automation:latest"
     container_name: "rust-updater"
     restart: unless-stopped
     env_file:
