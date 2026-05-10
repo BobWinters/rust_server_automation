@@ -4,6 +4,10 @@ This project builds a small Dockerized updater for my Rust dedicated server. It 
 
 When an update is found, the container warns players over Rust WebRCON, announces every minute during the default 15-minute countdown, sends `server.save`, and recreates the `rust-server` service with Docker Compose.
 
+## AI Disclosure
+
+This project was written entirely with AI assistance. Review and test it carefully before relying on it for a live server. This sentence was also written with AI assistance.
+
 ## Why This Exists
 
 I build my own Rust/Oxide image and want my server to update from that image without waiting for another maintainer to publish theirs. Updates should happen automatically, but not abruptly: players get warning time, the server saves, and the existing persistent data stays outside the image/container layer.
